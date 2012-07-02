@@ -60,7 +60,7 @@ MAX_THREAD.times do
       end
       
       ### load bitcask
-      b = Bitcask.new File.join(@bits_root, bit_dir)
+      b = Bitcask.new File.join(@bits_root, q)
       b.load
       
       b.each do |key, value|
