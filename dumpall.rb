@@ -19,8 +19,8 @@ File.open("./log/" + BASETIME.strftime("%Y-%m-%dT%H%M") + "_dumpout.log", "a") d
   STDOUT.reopen(file)
 end
 
-# @bits_root = "/var/db/riak/bitcask/"
-@bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
+@bits_root = "/var/db/riak/bitcask/"
+# @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 
 def dumpall()
@@ -29,7 +29,7 @@ def dumpall()
     next if bit_dir =~ /^\./
   
     ### load bitcask
-    b = Bitcask.new File.join(@bits_root, bit_dir)
+   b = Bitcask.new File.join(@bits_root, bit_dir)
     b.load
     
     b.each do |key, value|
