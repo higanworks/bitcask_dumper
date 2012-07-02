@@ -6,6 +6,7 @@ dump all buckets, keys and raw value data from riak backend storage.
 
 #### dump
 Dump all record to ./dump/ directory.
+
     bundle install
     ruby ./dumpall.rb
 
