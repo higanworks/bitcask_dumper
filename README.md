@@ -31,3 +31,5 @@ reap past net* billingdata.
 3. enable riak(empty).
 4. exec "ruby ./th_throw.rb"
 
+## LICENSE
+MIT. see LICENSE.txt
