@@ -23,8 +23,8 @@ require 'bert'
 #   end
 # end
 
-# @bits_root = "/var/db/riak/bitcask/"
-@bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
+@bits_root = "/var/db/riak/bitcask/"
+# @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 
 Dir.entries(@bits_root).each do |bit_dir|

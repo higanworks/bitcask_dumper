@@ -38,8 +38,8 @@ if !ENV["DEBUG"] then
   end
 end
 
-# @bits_root = "/var/db/riak/bitcask/"
-@bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
+@bits_root = "/var/db/riak/bitcask/"
+# @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 
 

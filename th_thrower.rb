@@ -39,8 +39,8 @@ if !ENV["DEBUG"] then
   end
 end
 
-@bits_root = "/var/db/riak/bitcask/"
-# @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
+# @bits_root = "/var/db/riak/bitcask/"
+@bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 # setup riak client
 @riak = Riak::Client.new(:host => '127.0.0.1', :protocol => "pbc")
