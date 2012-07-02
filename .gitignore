@@ -1,4 +1,6 @@
 .bundle/
+Gemfile.lock
 vendor/
 bits/
 dump/
+log/
