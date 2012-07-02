@@ -32,7 +32,7 @@ end
 # @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 # setup riak client
-@riak = Riak::Client.new(:host => '127.0.0.1')
+@riak = Riak::Client.new(:host => '127.0.0.1', :protocol => "pbc")
 
 def throw_to_riak()
   Dir.entries(@bits_root).each do |bit_dir|

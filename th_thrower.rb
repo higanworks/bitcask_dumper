@@ -43,7 +43,7 @@ end
 # @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 # setup riak client
-@riak = Riak::Client.new(:host => '127.0.0.1')
+@riak = Riak::Client.new(:host => '127.0.0.1', :protocol => "pbc")
 
 
 MAX_THREAD.times do
