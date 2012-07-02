@@ -31,7 +31,7 @@ end
 # @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 # setup riak client
-riak = Riak::Client.new
+@riak = Riak::Client.new(:host => '127.0.0.1')
 
 def throw_to_riak()
   Dir.entries(@bits_root).each do |bit_dir|
@@ -60,7 +60,7 @@ def throw_to_riak()
 
     # throw to riak
     puts "throw to riak: " + bucket + "/" + key
-    ob = riak.bucket(bucket)
+    ob = @riak.bucket(bucket)
     o = ob.get_or_new(key)
     o.raw_data = value.last
     o.content_type = "application/json"
