@@ -7,7 +7,7 @@ require 'json'
 
 ## setup thread
 require 'thread'
-MAX_THREAD = 5
+MAX_THREAD = 10
 # STOP queue
 STOP = 0x01
 threads = []
