@@ -33,6 +33,7 @@ BACK_DIR = "./dump/" + BASETIME.strftime("%Y-%m-%dT%H%M")
 ### change STDOUT to logfile
 if !ENV["DEBUG"] then
   File.open("./log/" + BASETIME.strftime("%Y-%m-%dT%H%M") + "_dumpout.log", "a") do |file|
+    puts "STDOUT redirect to #{file.path}.."
     STDOUT.reopen(file)
   end
 end

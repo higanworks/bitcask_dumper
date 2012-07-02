@@ -23,6 +23,7 @@ C_EXPIRE = BASETIME.to_i - EXPIRE
 ### change STDOUT to logfile
 if !ENV["DEBUG"] then
   File.open("./log/" + BASETIME.strftime("%Y-%m-%dT%H%M") + "_throw.log", "a") do |file|
+    puts "STDOUT redirect to #{file.path}.."
     STDOUT.reopen(file)
   end
 end
