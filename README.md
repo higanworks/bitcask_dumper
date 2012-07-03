@@ -21,7 +21,11 @@ Dump all record to ./dump/ directory.
 
     ruby ./dumpall.rb
 
+### thread version
 
+    ruby ./th_dumpall.rb
+
+Same three key-values are exported at different directories for avoiding collision.
 
 ## Maintenance Smart Data Center's riak
 reap past net* billingdata.
@@ -31,7 +35,7 @@ reap past net* billingdata.
 3. enable riak(empty).
 4. exec "ruby ./th_throw.rb"
 
-### for thread version (th_throw.eb)
+### for thread version (th_throw.rb)
 Recommend to increase nofiles before running.
 
     uname -n 30000    
