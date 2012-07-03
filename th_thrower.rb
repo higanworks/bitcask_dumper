@@ -82,11 +82,18 @@ MAX_THREAD.times do
   
         # throw to riak
         $log.info "throw to riak: " + bucket + "/" + key
-        ob = @riak.bucket(bucket)
-        o = ob.get_or_new(key)
-        o.raw_data = value.last
-        o.content_type = "application/json"
-        o.store
+        begin
+          ob = @riak.bucket(bucket)
+          o = ob.get_or_new(key)
+          o.raw_data = value.last
+          o.content_type = "application/json"
+          o.store
+        rescue => e
+          ## failed key name
+          $log.error "store failed : " + bucket + "/" + key
+          ## logging backtrace
+          $log.error e.exception
+        end
 
       end
     end
