@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 ## This is thread version. very fast.
-## But it's danger because riak has three same keys for redundancy.
-## 
+## Notice: riak has three same keys for redundancy.
+##  Thread version keeps bitcask directory names. 
+##  Same three key-values are exported at different directories for avoiding collision.
 
 require "bundler"
 Bundler.setup
@@ -38,8 +39,8 @@ if !ENV["DEBUG"] then
   end
 end
 
-@bits_root = "/var/db/riak/bitcask/"
-# @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
+# @bits_root = "/var/db/riak/bitcask/"
+@bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 
 
@@ -68,8 +69,8 @@ MAX_THREAD.times do
         value = BERT.decode value
       
         # dump the entire value to a file for later inspection.
-        FileUtils.mkdir_p(File.join(BACK_DIR,bucket))
-        File.open(File.join(BACK_DIR, bucket, key), 'w') do |out|
+        FileUtils.mkdir_p(File.join(BACK_DIR, q, bucket))
+        File.open(File.join(BACK_DIR, q, bucket, key), 'w') do |out|
           out.write value.to_json
         end
 
