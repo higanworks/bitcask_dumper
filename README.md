@@ -31,5 +31,10 @@ reap past net* billingdata.
 3. enable riak(empty).
 4. exec "ruby ./th_throw.rb"
 
+### for thread version (th_throw.eb)
+Recommend to increase nofiles before running.
+
+    uname -n 30000    
+
 ## LICENSE
 MIT. see LICENSE.txt
