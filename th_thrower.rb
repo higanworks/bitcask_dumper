@@ -83,7 +83,7 @@ MAX_THREAD.times do
 
         # check if exist before restore key-values.
         begin
-          @riak.bucket[bucket][key]
+          @riak[bucket][key]
         rescue Riak::HTTPFailedRequest
           # throw to riak
           $log.info "throw to riak : " + bucket + "/" + key
