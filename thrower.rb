@@ -59,22 +59,28 @@ def throw_to_riak()
         end
       end
 
-      # throw to riak
-      puts "throw to riak: " + bucket + "/" + key
-  
       begin
-        ob = @riak.bucket(bucket)
-        o = ob.get_or_new(key)
-        o.raw_data = value.last
-        o.content_type = "application/json"
-        o.store
-      rescue => e
-        ## failed key name
-        puts "store failed : " + bucket + "/" + key
-        ## logging backtrace
-        puts e.exception
-      end    
-
+        @riak[bucket][key]
+      rescue Riak::HTTPFailedRequest
+        # throw to riak
+        puts "throw to riak: " + bucket + "/" + key
+    
+        begin
+          ob = @riak.bucket(bucket)
+          o = ob.get_or_new(key)
+          o.raw_data = value.last
+          o.content_type = "application/json"
+          o.store
+        rescue => e
+          ## failed key name
+          puts "store failed : " + bucket + "/" + key
+          ## logging backtrace
+          puts e.exception
+        end    
+      else
+        ## store skiped
+        puts "skip exist key: " + bucket + "/" + key
+      end
     end
   end
 end
