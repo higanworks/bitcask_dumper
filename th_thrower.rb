@@ -80,21 +80,29 @@ MAX_THREAD.times do
           end
         end
   
-        # throw to riak
-        $log.info "throw to riak: " + bucket + "/" + key
-        begin
-          ob = @riak.bucket(bucket)
-          o = ob.get_or_new(key)
-          o.raw_data = value.last
-          o.content_type = "application/json"
-          o.store
-        rescue => e
-          ## failed key name
-          $log.error "store failed : " + bucket + "/" + key
-          ## logging backtrace
-          $log.error e.exception
-        end
 
+        # check if exist before restore key-values.
+        begin
+          @riak.bucket[bucket][key]
+        rescue Riak::HTTPFailedRequest
+          # throw to riak
+          $log.info "throw to riak : " + bucket + "/" + key
+          begin
+            ob = @riak.bucket(bucket)
+            o = ob.get_or_new(key)
+            o.raw_data = value.last
+            o.content_type = "application/json"
+            o.store
+          rescue => e
+            ## failed key name
+            $log.error "store failed  : " + bucket + "/" + key
+            ## logging backtrace
+            $log.error e.exception
+          end
+        else
+          ## store skiped
+          $log.info "skip exist key: " + bucket + "/" + key
+        end
       end
     end
   end
