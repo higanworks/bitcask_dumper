@@ -82,7 +82,7 @@ MAX_THREAD.times do
         if bucket =~ /_net[0-9]$/ then
           if key.to_i / 1000 < C_EXPIRE
             # log to 
-            $log.info "expired data : " + bucket + "/" + key
+            $log.info "expired data  : " + bucket + "/" + key
             next
           end
         end
