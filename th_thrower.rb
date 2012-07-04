@@ -47,6 +47,11 @@ end
 # @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 
+# setup riak client
+riak = Riak::Client.new(:host => '127.0.0.1')
+# riak = Riak::Client.new(:host => '127.0.0.1', :protocol => "pbc")
+
+
 MAX_THREAD.times do
   threads << Thread.start do
     $log.info "-- Stating thread --"
@@ -61,9 +66,6 @@ MAX_THREAD.times do
         break
       end
       
-
-      # setup riak client
-      riak = Riak::Client.new(:host => '127.0.0.1', :protocol => "pbc")
 
       ### load bitcask
       b = Bitcask.new File.join(@bits_root, q)
