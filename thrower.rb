@@ -4,11 +4,15 @@ Bundler.setup
 
 require 'fileutils'
 require 'json'
+require 'set'
 
 ### external
 require 'bitcask'
 require 'bert'
 require 'riak'
+
+### local
+require './lib/arr_ex'
 
 # CONST
 BASETIME = Time.now
@@ -40,7 +44,7 @@ def throw_to_riak()
     next if bit_dir =~ /^\./
   
     ### load bitcask
-   b = Bitcask.new File.join(@bits_root, bit_dir)
+    b = Bitcask.new File.join(@bits_root, bit_dir)
     b.load
     
     b.each do |key, value|
@@ -64,12 +68,24 @@ def throw_to_riak()
       rescue Riak::HTTPFailedRequest
         # throw to riak
         puts "throw to riak: " + bucket + "/" + key
-    
+
+        ## create Riak::Links
+        links = value.find_array("Links")[0]
+
+        links.each do |s|
+          @ss = Set.new
+          if BERT::Tuple === s then
+            @ss<< Riak::Link.new(s[0][0],s[0][1],s[1])
+          end
+        end
+
         begin
           ob = @riak.bucket(bucket)
           o = ob.get_or_new(key)
+#           o = Riak::RObject.new(key)
           o.raw_data = value.last
           o.content_type = "application/json"
+          o.links = @ss
           o.store
         rescue => e
           ## failed key name

@@ -4,6 +4,7 @@ Bundler.setup
 
 require 'fileutils'
 require 'json'
+require 'set'
 
 ## setup thread
 require 'thread'
@@ -20,6 +21,9 @@ $log = Logger.new(STDOUT)
 require 'bitcask'
 require 'bert'
 require 'riak'
+
+### load local
+require './lib/arr_ex'
 
 # CONST
 BASETIME = Time.now
@@ -39,8 +43,8 @@ if !ENV["DEBUG"] then
   end
 end
 
-# @bits_root = "/var/db/riak/bitcask/"
-@bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
+@bits_root = "/var/db/riak/bitcask/"
+# @bits_root = "/Users/sawanoboriyu/github/local/bitcask_dumper/bits/bitcask/"
 
 # setup riak client
 @riak = Riak::Client.new(:host => '127.0.0.1', :protocol => "pbc")
@@ -87,11 +91,24 @@ MAX_THREAD.times do
         rescue Riak::HTTPFailedRequest
           # throw to riak
           $log.info "throw to riak : " + bucket + "/" + key
+
+          ## create set of Riak::Link
+          links = value.find_array("Links")[0]
+  
+          links.each do |s|
+            @ss = Set.new
+            if BERT::Tuple === s then
+              @ss<< Riak::Link.new(s[0][0],s[0][1],s[1])
+            end
+          end
+
+          ## Store to riak.
           begin
             ob = @riak.bucket(bucket)
             o = ob.get_or_new(key)
             o.raw_data = value.last
             o.content_type = "application/json"
+            o.links = @ss
             o.store
           rescue => e
             ## failed key name
