@@ -96,7 +96,7 @@ MAX_THREAD.times do
           $log.info "throw to riak : " + bucket + "/" + key
 
           ## create set of Riak::Link
-          links = value.find_array("Links")[0]
+          links = value.find_array("Links")[0] || []
 
           ss = Set.new  
           links.each do |s|

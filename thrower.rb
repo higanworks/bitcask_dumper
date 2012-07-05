@@ -70,7 +70,7 @@ def throw_to_riak()
         puts "throw to riak: " + bucket + "/" + key
 
         ## create Riak::Links
-        links = value.find_array("Links")[0]
+        links = value.find_array("Links")[0] || []
 
         links.each do |s|
           @ss = Set.new
